@@ -15,15 +15,13 @@ export function* signIn({ payload }) {
     const signedIn = true;
 
     yield put(signInSuccess(signedIn, entregador));
-
-    // history.push('/encomendas');
   } catch (err) {
     const { response } = err;
 
     const error =
       response.status === '500'
-        ? response.data.error
-        : 'Verifique sua conexão com a internet';
+        ? 'Verifique sua conexão com a internet'
+        : response.data.error;
 
     Alert.alert('Falha no login', error);
 
