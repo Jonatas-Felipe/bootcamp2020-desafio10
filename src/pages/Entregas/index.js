@@ -16,6 +16,8 @@ import {
   DadosEntregador,
   Entregador,
   Avatar,
+  ButtonGroup,
+  ButtonAction,
   InfoEntregador,
   Text,
   Nome,
@@ -139,16 +141,19 @@ export default function Entregas() {
             <Nome>{entregador.name}</Nome>
           </InfoEntregador>
         </Entregador>
-        <TouchableOpacity onPress={() => handleNotification(entregador.id)}>
-          <Icon
-            name={hasUnread ? 'bell-ring' : 'bell-ring-outline'}
-            size={30}
-            color="#7159c1"
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleLogout}>
-          <Icon name="exit-to-app" size={30} color="#E74040" />
-        </TouchableOpacity>
+
+        <ButtonGroup>
+          <ButtonAction onPress={() => handleNotification(entregador.id)}>
+            <Icon
+              name={hasUnread ? 'bell-ring' : 'bell-ring-outline'}
+              size={30}
+              color="#7159c1"
+            />
+          </ButtonAction>
+          <ButtonAction onPress={handleLogout}>
+            <Icon name="exit-to-app" size={30} color="#E74040" />
+          </ButtonAction>
+        </ButtonGroup>
       </DadosEntregador>
       <Content>
         <TituloMenu>

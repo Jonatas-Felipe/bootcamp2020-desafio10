@@ -24,6 +24,15 @@ export const Avatar = styled.Image`
   margin-right: 12px;
 `;
 
+export const ButtonGroup = styled.View`
+  flex-direction: row;
+  justify-content: space-around;
+`;
+
+export const ButtonAction = styled.TouchableOpacity`
+  margin: 0 5px;
+`;
+
 export const InfoEntregador = styled.View``;
 
 export const Text = styled.Text`
