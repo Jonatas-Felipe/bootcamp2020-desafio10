@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
@@ -42,6 +42,7 @@ export default function Entregas() {
   const [status, setStatus] = useState('');
   const [page, setPage] = useState(1);
   const [refreshing, setRefreshing] = useState(false);
+  const [hasUnread, setHasUnread] = useState(false);
 
   async function loadEncomendas(filtro, pagina, oldEncomendas = []) {
     try {
@@ -67,9 +68,18 @@ export default function Entregas() {
     }
   }
 
+  async function checkNotifications() {
+    const response = await api.get(`notifications/${entregador.id}`);
+    const unRead = !!response.data.find(
+      (notification) => notification.read === false
+    );
+    setHasUnread(unRead);
+  }
+
   useEffect(() => {
     if (isFocused) {
       setLoading(true);
+      checkNotifications();
       setStatusMenu(false);
       loadEncomendas('', page);
     }
@@ -86,6 +96,13 @@ export default function Entregas() {
 
   function handleLogout() {
     dispatch(signOut());
+  }
+
+  function handleNotification(user_id) {
+    navigation.navigate('Encomenda', {
+      screen: 'Notificacoes',
+      params: { user_id },
+    });
   }
 
   function handlePress(id) {
@@ -122,6 +139,13 @@ export default function Entregas() {
             <Nome>{entregador.name}</Nome>
           </InfoEntregador>
         </Entregador>
+        <TouchableOpacity onPress={() => handleNotification(entregador.id)}>
+          <Icon
+            name={hasUnread ? 'bell-ring' : 'bell-ring-outline'}
+            size={30}
+            color="#7159c1"
+          />
+        </TouchableOpacity>
         <TouchableOpacity onPress={handleLogout}>
           <Icon name="exit-to-app" size={30} color="#E74040" />
         </TouchableOpacity>

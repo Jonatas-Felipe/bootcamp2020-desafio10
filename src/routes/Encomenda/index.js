@@ -7,6 +7,7 @@ import DetalhesEncomendas from '~/pages/DetalhesEncomendas';
 import InformarProblema from '~/pages/DetalhesEncomendas/InformarProblema';
 import VisualizarProblemas from '~/pages/DetalhesEncomendas/VisualizarProblemas';
 import ConfirmarEntrega from '~/pages/DetalhesEncomendas/ConfirmarEntrega';
+import Notificacoes from '~/pages/Notificacoes';
 
 const Stack = createStackNavigator();
 
@@ -52,6 +53,14 @@ export default function EncomendasRoutes() {
         component={ConfirmarEntrega}
         options={{
           title: 'Confirmar entrega',
+          headerLeft: () => <ReturnButton />,
+        }}
+      />
+      <Stack.Screen
+        name="Notificacoes"
+        component={Notificacoes}
+        options={{
+          title: 'Notificacoes',
           headerLeft: () => <ReturnButton />,
         }}
       />
